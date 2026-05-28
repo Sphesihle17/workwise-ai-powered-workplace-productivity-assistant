@@ -48,9 +48,7 @@ AI Chatbot Interface : Provides conversational AI support for workplace-related 
 
 Lovable AI  
 
-Google Gemini API  
-
-HTML, CSS, JavaScript  
+Typescript, CSS, JavaScript  
 
 Prompt Engineering Techniques  
 
