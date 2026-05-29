@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SummarizerRouteImport } from './routes/summarizer'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,6 +30,11 @@ const ResearchRoute = ResearchRouteImport.update({
 const PlannerRoute = PlannerRouteImport.update({
   id: '/planner',
   path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmailRoute = EmailRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/insights': typeof InsightsRoute
   '/planner': typeof PlannerRoute
   '/research': typeof ResearchRoute
   '/summarizer': typeof SummarizerRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/insights': typeof InsightsRoute
   '/planner': typeof PlannerRoute
   '/research': typeof ResearchRoute
   '/summarizer': typeof SummarizerRoute
@@ -68,20 +76,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
+  '/insights': typeof InsightsRoute
   '/planner': typeof PlannerRoute
   '/research': typeof ResearchRoute
   '/summarizer': typeof SummarizerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/email' | '/planner' | '/research' | '/summarizer'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/insights'
+    | '/planner'
+    | '/research'
+    | '/summarizer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/email' | '/planner' | '/research' | '/summarizer'
+  to:
+    | '/'
+    | '/chat'
+    | '/email'
+    | '/insights'
+    | '/planner'
+    | '/research'
+    | '/summarizer'
   id:
     | '__root__'
     | '/'
     | '/chat'
     | '/email'
+    | '/insights'
     | '/planner'
     | '/research'
     | '/summarizer'
@@ -91,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChatRoute: typeof ChatRoute
   EmailRoute: typeof EmailRoute
+  InsightsRoute: typeof InsightsRoute
   PlannerRoute: typeof PlannerRoute
   ResearchRoute: typeof ResearchRoute
   SummarizerRoute: typeof SummarizerRoute
@@ -117,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/planner'
       fullPath: '/planner'
       preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/email': {
@@ -147,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatRoute: ChatRoute,
   EmailRoute: EmailRoute,
+  InsightsRoute: InsightsRoute,
   PlannerRoute: PlannerRoute,
   ResearchRoute: ResearchRoute,
   SummarizerRoute: SummarizerRoute,

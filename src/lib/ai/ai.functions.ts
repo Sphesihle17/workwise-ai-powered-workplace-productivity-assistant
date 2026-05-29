@@ -68,15 +68,35 @@ Keep it concise, professional, no fluff.`;
   });
 
 export const planTasks = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ tasks: z.string().min(1).max(4000) }))
+  .inputValidator(
+    z.object({
+      tasks: z.string().min(1).max(4000),
+      timeframe: z.enum(["daily", "weekly", "monthly"]).default("daily"),
+    }),
+  )
   .handler(async ({ data }) => {
-    const system = `You are a workplace productivity assistant. Create a clear daily task plan.
-Format with short bullet sections:
+    const tf = data.timeframe;
+    const scope =
+      tf === "daily"
+        ? "a single focused workday"
+        : tf === "weekly"
+          ? "a balanced 5-day work week with day-by-day breakdown"
+          : "a full month with weekly themes and milestones";
+
+    const scheduleSection =
+      tf === "daily"
+        ? "**Suggested Schedule** (hour-by-hour blocks)"
+        : tf === "weekly"
+          ? "**Weekly Schedule** (Monday → Friday breakdown)"
+          : "**Monthly Roadmap** (Week 1 → Week 4 themes & milestones)";
+
+    const system = `You are a workplace productivity assistant. Build a clear ${tf} plan for ${scope}.
+Format with short bullet sections (use markdown headings):
 **High Priority**
 **Medium Priority**
-**Suggested Schedule**
+${scheduleSection}
 **3 Productivity Tips**
-Use simple professional language. Be concise.`;
+Use simple professional language. Be concise and actionable.`;
     const content = await callAI(system, `Tasks:\n${data.tasks}`);
     return { content };
   });
@@ -92,6 +112,28 @@ Format with short bullet sections:
 **Recommendations**
 Use simple workplace language, avoid jargon.`;
     const content = await callAI(system, data.topic);
+    return { content };
+  });
+
+export const productivityInsights = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      context: z.string().min(1).max(4000),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const system = `You are an AI productivity coach analyzing a professional's work patterns.
+Provide sharp, specific, and actionable insights. Format with markdown headings:
+**Productivity Patterns**
+- 2-3 observations about when/how this person works best
+**Smart Recommendations**
+- 3-4 specific, actionable suggestions
+**Risk Areas**
+- Overdue items, bottlenecks, or burnout signals to watch
+**Time Management Habits**
+- 3 concrete habits to adopt this week
+Keep each bullet under 20 words. Be encouraging but honest.`;
+    const content = await callAI(system, data.context);
     return { content };
   });
 
