@@ -123,7 +123,7 @@
   --warning-foreground: oklch(0.18 0.04 75);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.7 0.18 270);
+  --ring: oklch(0.75 0.18 25);
   --sidebar: oklch(0.19 0.025 260);
   --sidebar-foreground: oklch(0.95 0.005 250);
   --sidebar-primary: oklch(0.7 0.18 270);
