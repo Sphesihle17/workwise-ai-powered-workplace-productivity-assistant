@@ -109,10 +109,12 @@ const TITLES: Record<string, string> = {
   "/": "Dashboard",
   "/email": "Smart Email Generator",
   "/summarizer": "Meeting Notes Summarizer",
-  "/planner": "AI Task Planner",
+  "/planner": "Productivity Planner",
   "/research": "AI Research Assistant",
   "/chat": "AI Chat",
+  "/insights": "AI Productivity Insights",
 };
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
