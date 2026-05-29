@@ -141,7 +141,7 @@ WorkWise AI was built using:
 * Lovable AI – for designing the interface and functionality
 * ChatGPT – for prompt engineering, refinement, and development support
 * Gemini API – for generating AI-powered responses
-* HTML, CSS, and JavaScript – for responsive layouts and interactivity
+* HTML, CSS, TypeScript and JavaScript – for responsive layouts and interactivity
 
 ---
 
